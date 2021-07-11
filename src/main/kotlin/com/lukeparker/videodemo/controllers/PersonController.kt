@@ -26,7 +26,7 @@ class PersonController {
     }
 
     @PostMapping
-    fun createPerson(createModel: PersonCreateModel): Person {
+    fun createPerson(createModel: PersonCreateModel): ResponseEntity<Person> {
         val person = Person(
             (1..1_000_000).random(),
             createModel.firstName,
@@ -34,7 +34,7 @@ class PersonController {
             createModel.age,
         )
         people.add(person)
-        return person
+        return ResponseEntity.ok(person)
     }
 
     companion object {

@@ -37,6 +37,28 @@ class PersonController {
         return ResponseEntity.ok(person)
     }
 
+    @DeleteMapping("{id}")
+    fun deletePerson(@PathVariable id: Int): ResponseEntity<Void> {
+        val index = people.indexOfFirst { p -> p.id == id }
+        if (index == -1) {
+            return ResponseEntity.notFound().build()
+        } else {
+            people.removeAt(index)
+            return ResponseEntity.ok().build()
+        }
+    }
+
+    @PutMapping
+    fun updatePerson(updatedPerson: Person): ResponseEntity<Person> {
+        val index = people.indexOfFirst { p -> p.id == updatedPerson.id }
+        if (index == -1) {
+            return ResponseEntity.notFound().build()
+        } else {
+            people[index] = updatedPerson
+            return ResponseEntity.ok(updatedPerson)
+        }
+    }
+
     companion object {
         var people = mutableListOf(
             Person(
